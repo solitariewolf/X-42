@@ -1,0 +1,74 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-login {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+}
+
+.form-login img {
+    width: 150px;
+    height: 150px;
+}
+
+.form-login label {
+    display: block;
+    margin-top: 20px;
+}
+
+.form-login input[type="text"],
+.form-login input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: none;
+    background-color: #c0ccd5;
+}
+
+.form-login input[type="submit"] {
+    margin-top: 20px;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    background-color: #2a5298;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.form-login input[type="submit"]:hover {
+    background-color: #001d4e;
+}
+
+.mensagem-erro {
+    background-color: #f44336; /* Cor de fundo vermelha */
+    color: #ffffff; /* Cor do texto branca */
+    display: inline-block;
+    padding: 10px 20px; /* Espaçamento interno para dar espaço ao texto */
+    border-radius: 4px; /* Bordas arredondadas */
+    position: fixed; /* Posicionamento fixo */
+    top: 10px; /* 10px a partir do topo da página */
+    right: 10px; /* 10px a partir da direita da página */
+    z-index: 1000; /* Z-index alto para garantir que apareça acima de outros elementos */
+    transition: opacity 0.5s; /* Transição suave para a opacidade */
+    opacity: 0; /* Inicialmente invisível */
+}
+
+.mensagem-erro.mostrar {
+    opacity: 1; /* Torna-se visível quando a classe 'mostrar' é adicionada */
+}

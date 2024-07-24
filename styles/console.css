@@ -1,0 +1,130 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    justify-content: center;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo img{
+    height: 150px;
+}
+
+.home-icon {
+    font-size: 54px;
+    color: #000000;
+    text-align: center;
+    }
+
+.home-icon p{
+    font-size: 18px;
+    text-align: center;
+}
+
+a{
+    text-decoration: none;
+  }
+
+
+
+.terminal-section {
+    margin-bottom: 20px;
+}
+
+.terminal-output {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    height: 200px;
+    overflow-y: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.terminal-input {
+    display: flex;
+    justify-content: space-between;
+}
+
+.terminal-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+}
+
+.terminal-input button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.terminal-input button i {
+    margin-right: 10px;
+}
+
+.terminal-input button:hover {
+    background-color: #0056b3;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.controls button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.controls button i {
+    margin-right: 10px;
+}
+
+.controls button:hover {
+    background-color: #0056b3;
+}
+
+.charts {
+    display: flex;
+    justify-content: space-around;
+}
+
+.chart-container {
+    width: 45%;
+}
+
+.chart-container h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}

@@ -12,18 +12,38 @@ body {
     justify-content: center;
 }
 
+.logo img{
+  height: 150px;
+  margin-top: 165px;
+}
+
 .container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
   }
   
+  .home-icon {
+    font-size: 54px;
+    color: #ffffff;
+    text-align: center;
+}
+
+  .home-icon p{
+    font-size: 18px;
+    text-align: center;
+  }
+
+  a{
+    text-decoration: none;
+  }
+
   header {
     text-align: center;
     margin-bottom: 20px;
   }
   
-  .upload-section, .folder-section {
+  .upload-section, .folder-section, .file-section {
     background: #fff;
     padding: 20px;
     margin-bottom: 20px;
@@ -34,6 +54,22 @@ body {
   h2 {
     margin-top: 0;
   }
+
+  label {
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+#folder-select {
+    width: 200px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+}
+
   
   input[type="file"] {
     display: block;
@@ -64,7 +100,8 @@ body {
     margin-bottom: 10px;
 }
 
-.folder-actions input[type="text"] {
+.folder-actions input[type="text"], 
+.file-section input[type="text"] {
     margin-bottom: 5px;
     padding: 5px;
     border: 1px solid #ccc;
@@ -83,3 +120,56 @@ body {
 .folder-actions button[type="submit"]:hover {
     background-color: #45a049;
 }
+
+.folders {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.folder {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.folder i {
+  margin-right: 10px;
+  color: #ffc107;
+}
+
+.folder input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.files {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.file {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: #f9f9f9;
+}
+
+.file i {
+  margin-right: 10px;
+  color: #28a745;
+}
+
+.file input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+

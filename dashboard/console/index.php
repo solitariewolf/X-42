@@ -28,25 +28,19 @@ if (!isset($_SESSION['login'])) {
         </a>
         </div>
 
-        <header>
-            <h1>Console de Gerenciamento</h1>
-        </header>
-
-        <section class="terminal-section">
-            <div class="terminal-output" id="terminal-output"></div>
-            <div class="terminal-input">
-                <input type="text" id="terminal-input" placeholder="Digite um comando...">
-                <button id="send-command-btn"><i class="fas fa-paper-plane"></i> Enviar</button>
-            </div>
-        </section>
-
-        <section class="controls">
+        <div class="container">
+        <h1>Console do Bot</h1>
+        <textarea id="console-output" readonly></textarea>
+        <div class="console-input">
+            <input type="text" id="console-command" placeholder="Digite o comando aqui...">
+            <button id="send-command-btn">Enviar</button>
+        </div>
+        <div class="actions">
             <button id="start-btn"><i class="fas fa-play"></i> Iniciar</button>
-            <button id="restart-btn"><i class="fas fa-sync-alt"></i> Reiniciar</button>
+            <button id="restart-btn"><i class="fas fa-sync"></i> Reiniciar</button>
             <button id="stop-btn"><i class="fas fa-stop"></i> Parar</button>
-            <button id="force-stop-btn"><i class="fas fa-ban"></i> Forçar Parada</button>
-            <button id="stats-btn"><i class="fas fa-chart-line"></i> Estatísticas</button>
-        </section>
+            <button id="force-stop-btn"><i class="fas fa-times-circle"></i> Forçar Parada</button>
+        </div>
 
         <section class="charts">
             <div class="chart-container">

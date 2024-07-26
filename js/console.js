@@ -65,53 +65,36 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    document.getElementById('start-btn').addEventListener('click', function() {
-        // Lógica para iniciar o bot
-        appendToTerminal('Iniciar bot');
+    document.getElementById('start-btn').addEventListener('click', () => {
+        fetch('../console/start_bot.php', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => updateConsole(data.status));
     });
-
-    document.getElementById('restart-btn').addEventListener('click', function() {
-        // Lógica para reiniciar o bot
-        appendToTerminal('Reiniciar bot');
+    
+    document.getElementById('stop-btn').addEventListener('click', () => {
+        fetch('../console/stop_bot.php', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => updateConsole(data.status));
     });
-
-    document.getElementById('stop-btn').addEventListener('click', function() {
-        // Lógica para parar o bot
-        appendToTerminal('Parar bot');
+    
+    document.getElementById('restart-btn').addEventListener('click', () => {
+        fetch('../console/restart_bot.php', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => updateConsole(data.status));
     });
-
-    document.getElementById('force-stop-btn').addEventListener('click', function() {
-        // Lógica para forçar a parada do bot
-        appendToTerminal('Forçar parada do bot');
+    
+    document.getElementById('force-stop-btn').addEventListener('click', () => {
+        fetch('../console/force_stop_bot.php', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => updateConsole(data.status));
     });
-
-    document.getElementById('stats-btn').addEventListener('click', function() {
-        // Lógica para atualizar estatísticas
-        appendToTerminal('Atualizar estatísticas');
-        updateCharts(ramChart, cpuChart);
-    });
-
-    sendCommandBtn.addEventListener('click', function() {
-        const command = terminalInput.value.trim();
-        if (command) {
-            appendToTerminal(`Comando: ${command}`);
-            // Lógica para processar o comando
-            terminalInput.value = '';
-        }
-    });
-
-    terminalInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            sendCommandBtn.click();
-        }
-    });
-
-    function appendToTerminal(message) {
-        const messageElement = document.createElement('div');
-        messageElement.textContent = message;
-        terminalOutput.appendChild(messageElement);
-        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+    
+    function updateConsole(message) {
+        const consoleOutput = document.getElementById('console-output');
+        consoleOutput.value += message + '\n';
+        consoleOutput.scrollTop = consoleOutput.scrollHeight;
     }
+    
 
     function updateCharts(ramChart, cpuChart) {
         // Simulação de dados, substitua isso com dados reais

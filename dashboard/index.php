@@ -235,12 +235,14 @@ if (!isset($_SESSION['login'])) {
             </div>
             </a>
           </div>
+          <a href="config">
           <div class='future_ui__piece'>
             <span>CONFIG</span>
             <div class='line'></div>
             <div class='tip'>
             Sim, Comandante!
             </div>
+            </a>
           </div>
           <div class='future_ui__piece'>
             <span>MEU PERFIL</span>

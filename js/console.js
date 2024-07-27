@@ -1,14 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
     const ramCtx = document.getElementById('ram-chart').getContext('2d');
     const cpuCtx = document.getElementById('cpu-chart').getContext('2d');
-    const terminalOutput = document.getElementById('terminal-output');
-    const terminalInput = document.getElementById('terminal-input');
+    const consoleOutput = document.getElementById('console-output');
+    const terminalInput = document.getElementById('console-command');
     const sendCommandBtn = document.getElementById('send-command-btn');
 
     const ramChart = new Chart(ramCtx, {
         type: 'line',
         data: {
-            labels: [], // Labels will be added dynamically
+            labels: [],
             datasets: [{
                 label: 'Uso de RAM',
                 data: [],
@@ -19,18 +19,8 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         options: {
             scales: {
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Tempo'
-                    }
-                },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Uso de RAM (MB)'
-                    }
-                }
+                x: { title: { display: true, text: 'Tempo' } },
+                y: { title: { display: true, text: 'Uso de RAM (MB)' } }
             }
         }
     });
@@ -38,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const cpuChart = new Chart(cpuCtx, {
         type: 'line',
         data: {
-            labels: [], // Labels will be added dynamically
+            labels: [],
             datasets: [{
                 label: 'Uso de CPU',
                 data: [],
@@ -49,64 +39,122 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         options: {
             scales: {
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Tempo'
-                    }
-                },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Uso de CPU (%)'
-                    }
-                }
+                x: { title: { display: true, text: 'Tempo' } },
+                y: { title: { display: true, text: 'Uso de CPU (%)' } }
             }
         }
     });
 
-    document.getElementById('start-btn').addEventListener('click', () => {
-        fetch('../console/start_bot.php', { method: 'POST' })
-            .then(response => response.json())
-            .then(data => updateConsole(data.status));
-    });
-    
-    document.getElementById('stop-btn').addEventListener('click', () => {
-        fetch('../console/stop_bot.php', { method: 'POST' })
-            .then(response => response.json())
-            .then(data => updateConsole(data.status));
-    });
-    
-    document.getElementById('restart-btn').addEventListener('click', () => {
-        fetch('../console/restart_bot.php', { method: 'POST' })
-            .then(response => response.json())
-            .then(data => updateConsole(data.status));
-    });
-    
-    document.getElementById('force-stop-btn').addEventListener('click', () => {
-        fetch('../console/force_stop_bot.php', { method: 'POST' })
-            .then(response => response.json())
-            .then(data => updateConsole(data.status));
-    });
-    
     function updateConsole(message) {
-        const consoleOutput = document.getElementById('console-output');
-        consoleOutput.value += message + '\n';
+        consoleOutput.value += `${message}\n`;
         consoleOutput.scrollTop = consoleOutput.scrollHeight;
     }
+
+    function startLogPolling() {
+        setInterval(() => {
+            fetch('../logs/bot.log')
+                .then(response => response.text())
+                .then(data => {
+                    consoleOutput.value = data.split('\n').slice(-35).join('\n');
+                    consoleOutput.scrollTop = consoleOutput.scrollHeight;
+                })
+                .catch(error => updateConsole(`Error: ${error.message}`));
+        }, 2000);
+    }
+
+    document.getElementById('start-btn').addEventListener('click', () => {
+        fetch('start_bot.php', { method: 'POST' })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === 'success') {
+                    updateConsole(`Bot started with PID: ${data.pid}`);
+                    startLogPolling();
+                } else {
+                    updateConsole(`Error: ${data.message}`);
+                }
+            })
+            .catch(error => updateConsole(`Error: ${error.message}`));
+    });
+
+    document.getElementById('stop-btn').addEventListener('click', () => {
+        fetch('stop_bot.php', { method: 'POST' })
+            .then(response => response.text())
+            .then(data => {
+                try {
+                    const jsonData = JSON.parse(data);
+                    if (jsonData.status === 'success') {
+                        updateConsole('Bot stopped successfully');
+                    } else {
+                        updateConsole(`Error: ${jsonData.message}`);
+                    }
+                } catch (error) {
+                    updateConsole(`Failed to parse response: ${data}`);
+                }
+            })
+            .catch(error => updateConsole(`Error: ${error.message}`));
+    });
     
 
-    function updateCharts(ramChart, cpuChart) {
-        // Simulação de dados, substitua isso com dados reais
+    document.getElementById('restart-btn').addEventListener('click', () => {
+        fetch('restart_bot.php', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => updateConsole(data.status))
+            .catch(error => updateConsole(`Error: ${error.message}`));
+    });
+
+    document.getElementById('force-stop-btn').addEventListener('click', () => {
+        fetch('force_stop_bot.php', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => updateConsole(data.status))
+            .catch(error => updateConsole(`Error: ${error.message}`));
+    });
+
+    // Load initial logs
+    fetch('get_logs.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                consoleOutput.value = data.logs.join('\n');
+                consoleOutput.scrollTop = consoleOutput.scrollHeight;
+            } else {
+                console.error('Erro ao carregar logs:', data.message);
+            }
+        })
+        .catch(error => console.error('Erro ao carregar logs:', error));
+
+    sendCommandBtn.addEventListener('click', () => {
+        const command = terminalInput.value;
+        if (command.trim()) {
+            fetch('send_command.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ command })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        updateConsole(data.output);
+                        terminalInput.value = '';
+                    } else {
+                        updateConsole(`Erro ao enviar comando: ${data.message}`);
+                    }
+                })
+                .catch(error => updateConsole(`Erro ao enviar comando: ${error.message}`));
+        }
+    });
+
+    function updateCharts() {
         const currentTime = new Date().toLocaleTimeString();
-        const ramUsage = Math.random() * 1000;
-        const cpuUsage = Math.random() * 100;
+        const ramUsage = Math.random() * 1000; // Replace with actual data
+        const cpuUsage = Math.random() * 100;  // Replace with actual data
 
         if (ramChart.data.labels.length >= 20) {
             ramChart.data.labels.shift();
             ramChart.data.datasets[0].data.shift();
         }
-
         if (cpuChart.data.labels.length >= 20) {
             cpuChart.data.labels.shift();
             cpuChart.data.datasets[0].data.shift();
@@ -120,4 +168,6 @@ document.addEventListener('DOMContentLoaded', function() {
         cpuChart.data.datasets[0].data.push(cpuUsage);
         cpuChart.update();
     }
+
+    setInterval(updateCharts, 2000); // Update charts every 2 seconds
 });

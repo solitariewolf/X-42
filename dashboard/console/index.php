@@ -1,10 +1,3 @@
-<?php
-session_start();
-if (!isset($_SESSION['login'])) {
-    header('Location: ../');
-    exit;
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,29 +10,29 @@ if (!isset($_SESSION['login'])) {
 </head>
 <body>
     <div class="container">
-
-    <div class="logo">
-        <img src="../../img/logo.png" alt="">
-    </div>
+        <div class="logo">
+            <img src="../../img/logo.png" alt="">
+        </div>
         <a href="../index.php">
             <div class="home-icon">
-            <i class="fas fa-home"></i>
-            <p>Home</p>
+                <i class="fas fa-home"></i>
+                <p>Home</p>
+            </div>
         </a>
-        </div>
 
-        <div class="container">
-        <h1>Console do Bot</h1>
-        <textarea id="console-output" readonly></textarea>
-        <div class="console-input">
-            <input type="text" id="console-command" placeholder="Digite o comando aqui...">
-            <button id="send-command-btn">Enviar</button>
-        </div>
-        <div class="actions">
-            <button id="start-btn"><i class="fas fa-play"></i> Iniciar</button>
-            <button id="restart-btn"><i class="fas fa-sync"></i> Reiniciar</button>
-            <button id="stop-btn"><i class="fas fa-stop"></i> Parar</button>
-            <button id="force-stop-btn"><i class="fas fa-times-circle"></i> Forçar Parada</button>
+        <div class="console-container">
+            <h1>Console do Bot</h1>
+            <textarea id="console-output" readonly></textarea>
+            <div class="console-input">
+                <input type="text" id="console-command" placeholder="Digite o comando aqui...">
+                <button id="send-command-btn">Enviar</button>
+            </div>
+            <div class="actions">
+                <button id="start-btn"><i class="fas fa-play"></i> Iniciar</button>
+                <button id="restart-btn"><i class="fas fa-sync"></i> Reiniciar</button>
+                <button id="stop-btn"><i class="fas fa-stop"></i> Parar</button>
+                <button id="force-stop-btn"><i class="fas fa-times-circle"></i> Forçar Parada</button>
+            </div>
         </div>
 
         <section class="charts">

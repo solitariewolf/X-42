@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "discord.js": "^14.15.3",
+    "node": "^20.16.0",
+    "nodejs": "^0.0.0"
+  }
+}
